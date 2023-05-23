@@ -1,0 +1,158 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 6rem;
+  width: 100vw;
+  height: 100vh;
+}
+
+.content {
+  position: absolute;
+  top: 0px;
+  left: 250px;
+  background: #FFFFFF;
+}
+
+.topmenu {
+  height: 80px;
+  width: calc(100vw - 250px);
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  z-index: 3;
+}
+
+.topmenu h1 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-direction: row;
+  padding: 0 68px;
+}
+
+.clearAllButton {
+  height: 37px;
+
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+
+  display: inline-flex;
+  align-items: center;
+}
+
+.filterButton {
+  padding: 8.5px 20px;
+  width: 59px;
+  height: 37px;
+  margin: 46px 0 25px 0;
+
+  display: inline-flex;
+  align-items: center;
+
+  border: 1px solid #ABABAB;
+  border-radius: 30px;
+}
+
+.column {
+  display: flex;
+  align-items: start;
+  flex-direction: row;
+}
+
+.center_content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.friend {
+  width: 1050px;
+  height: 114px;
+  margin-bottom: 15px;
+  padding: 0px 30px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  border: 1px solid #D7D7D7;
+  border-radius: 6px;
+}
+
+.name {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  color: #000000;
+
+  margin-bottom: 12px;
+  margin-right: 10px;
+}
+
+.details {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  color: #ABABAB;
+}
+
+.pill {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 3px 7px;
+  gap: 10px;
+  border-radius: 21px;
+
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.pill.closeFriends {
+  color: #3399FF;
+  background-color: #DFEFFF;
+  ;
+}
+
+.pill.superCloseFriends {
+  color: #19B444;
+  background-color: #DCFFE6;
+}
+
+/* Tablet and Smaller Desktop */
+@media (min-width: 701px) and (max-width: 1120px) {
+  .grid {
+    grid-template-columns: repeat(2, 50%);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
