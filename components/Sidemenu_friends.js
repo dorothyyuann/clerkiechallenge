@@ -8,11 +8,11 @@ const Sidemenu = () => {
                 <div className="logo">
                     <img src="../assets/images/logo-text.svg" />
                 </div>
-                <a className='selectedBtn' href='/'>
+                <a className='btn' href='/'>
                     <img src="../assets/icons/home.svg" />
                     Home
                 </a>
-                <a className='btn' href='friends'>
+                <a className='selectedBtn' href='friends'>
                     <img src="../assets/icons/friends.svg" />
                     Friends
                 </a>
