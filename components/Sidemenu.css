@@ -24,11 +24,11 @@ nav a:hover {
 
 .selectedBtn {
   background: #424242;
+  border-radius: 6px;
   display: flex;
   align-items: center;
-  border-radius: 6px;
+  
   padding: 12px 15px 12px 15px;
-  margin-bottom: 12px;
   display: flex;
   align-items: center;
 
@@ -45,7 +45,7 @@ nav a:hover {
 
 .btn {
   color: #fff;
-  padding: 0 15px 12px 15px;
+  padding: 12px 15px 12px 15px;
   display: flex;
   align-items: center;
 

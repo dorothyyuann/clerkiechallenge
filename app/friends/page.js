@@ -1,7 +1,17 @@
-import styles from './friends.module.css'
-import SideMenu from '../../components/Sidemenu_friends'
+"use client"
+import styles from './friends.module.css';
+import SideMenu from '../../components/Sidemenu_friends';
+import Filter from '@/components/Filter';
+import React, { useState } from 'react';
+
+import friends from './data.json' assert {type: 'json'};
 
 export default function Friends() {
+  const [isAnyCheckboxSelected, setIsAnyCheckboxSelected] = useState(false);
+
+  const handleClearAllClick = () => {
+    setIsAnyCheckboxSelected(false);
+  };
 
   return (
     <main className={styles.main}>
@@ -11,39 +21,40 @@ export default function Friends() {
           <h1>Friends</h1>
         </div>
 
-
-        <div className={styles.filter}>
-          <button className={styles.filterButton}>
-            <img src="./../assets/icons/filter.svg" />
-          </button>
-          <button className={styles.clearAllButton}>| Clear all</button>
-        </div>
         <div className={styles.center_content}>
-          <div className={styles.friend}>
-            <div className={styles.column}>
-              <div className={styles.name}>Sally Cooper</div>
-              <span className={[styles.pill, styles.closeFriends].join(' ')}>Close Friends</span>
+          <div className={styles.filterWrapper}>
+            <Filter setIsAnyCheckboxSelected={setIsAnyCheckboxSelected} />
+            <div className={styles.clearAllWrapper}>
+              <button className={isAnyCheckboxSelected ? `${styles.clearAllButton} ${styles.clearAllButtonSelected}` : styles.clearAllButton} onClick={handleClearAllClick}>
+                Clear All
+              </button>
             </div>
-            <div className={styles.details}>sallycooper@gmail.com • (470) 782-5471</div>
           </div>
 
-          <div className={styles.friend}>
-            <div className={styles.column}>
-              <div className={styles.name}>Judith Gonzalez</div>
+          {friends.map((friend, index) => (
+            <div className={styles.friend} key={index}>
+              <div className={styles.headerWrapper}>
+                <div className={styles.name}>{friend.name}</div>
+                {friend.status === 3 && (
+                  <span className={[styles.pill, styles.superCloseFriends].join(' ')}>
+                    Super Close Friends
+                  </span>
+                )}
+                {friend.status === 2 && (
+                  <span className={[styles.pill, styles.closeFriends].join(' ')}>
+                    Close Friends
+                  </span>
+                )}
+              </div>
+              <div className={styles.details}>
+                {friend.email} • {friend.number}
+              </div>
             </div>
-            <div className={styles.details}>jgonzalez@gmail.com • (123) 142-4123</div>
-          </div>
-
-          <div className={styles.friend}>
-            <div className={styles.column}>
-              <div className={styles.name}>Betty Wood</div>
-              <span className={[styles.pill, styles.superCloseFriends].join(' ')}>Super Close Friends</span>
-            </div>
-            <div className={styles.details}>betty@gmail.com • (273) 098-1029</div>
-          </div>
+          ))}
+          
         </div>
       </div>
 
     </main>
-  )
+  );
 }

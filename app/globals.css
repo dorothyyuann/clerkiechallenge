@@ -3,6 +3,13 @@
     flex-direction: column;
 }
 
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: space-between;
+}
+
 * {
     box-sizing: border-box;
     padding: 0;

@@ -1,0 +1,142 @@
+.filterButton {
+    padding: 8.5px 20px;
+    margin: 0;
+    width: 59px;
+    height: 37px;
+
+    display: inline-flex;
+    align-items: center;
+
+    border: 1px solid #ABABAB;
+    border-radius: 30px;
+}
+
+.filterButtonSelected {
+    padding: 8.5px 20px;
+    margin: 0;
+    width: 59px;
+    height: 37px;
+
+    display: inline-flex;
+    align-items: center;
+
+    background: #424242;
+    border-radius: 30px;
+}
+
+.overlay {
+    position: absolute;
+    width: 320px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    border-radius: 6px;
+    margin-top: 10px;
+    z-index: 3;
+}
+
+.header {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #EAEAEA;
+    padding: 0 25px;
+}
+
+.clearAllBtn {
+    color: #D7D7D7;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    padding: 0px;
+    justify-content: start;
+}
+
+.clearAllBtnSelected {
+    color: #3399FF;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    padding: 0px;
+    justify-content: start;
+}
+
+.title {
+    color: #424242;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+}
+
+.closeBtn {
+    padding: 0px;
+    justify-content: end;
+}
+
+.content {
+    padding: 16px 10px;
+}
+
+.content .filterName {
+    padding: 10px;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+
+    display: flex;
+
+    color: #686868;
+}
+
+.content label {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    margin-top: 25px;
+
+    color: #424242;
+}
+
+.content input {
+    width: 19px;
+    height: 19px;
+
+    border: 1.5px solid #ABABAB;
+    border-radius: 1px;
+}
+
+.applyBtn {
+    width: 300px;
+    height: 45px;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color: #FFFFFF;
+
+    background: #424242;
+    border-radius: 6px;
+}
