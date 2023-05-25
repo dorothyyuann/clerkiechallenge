@@ -41,6 +41,10 @@ const Filter = ({ selectedFilters, setSelectedFilters, onApply, onClearAll }) =>
     setSelectedFilters(pendingSelectedFilters);
   };
 
+  useEffect(() => {
+    setPendingSelectedFilters(selectedFilters);
+  }, [selectedFilters]);
+
   return (
     <div>
       <button

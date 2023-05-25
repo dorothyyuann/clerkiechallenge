@@ -1,8 +1,8 @@
 "use client"
+import React, { useState, useEffect } from 'react';
 import styles from './friends.module.css';
 import SideMenu from '../../components/Sidemenu_friends';
 import Filter from '@/components/Filter';
-import React, { useState, useEffect } from 'react';
 
 import friendsData from './data.json' assert { type: 'json' };
 
