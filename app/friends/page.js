@@ -2,26 +2,40 @@
 import styles from './friends.module.css';
 import SideMenu from '../../components/Sidemenu_friends';
 import Filter from '@/components/Filter';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import friendsData from './data.json' assert { type: 'json' };
 
 export default function Friends() {
-  const [selectedCheckbox, setSelectedCheckbox] = useState('');
+  const [selectedFilters, setSelectedFilters] = useState([]);
+
+  useEffect(() => {
+    const storedSelectedFilters = JSON.parse(localStorage.getItem('selectedFilters'));
+    if (storedSelectedFilters && storedSelectedFilters.length > 0) {
+      setSelectedFilters(storedSelectedFilters);
+    }
+  }, []);
 
   const handleClearAllClick = () => {
-    setSelectedCheckbox('');
+    setSelectedFilters([]);
+    localStorage.removeItem('selectedFilters');
   };
 
-  const handleCheckboxChange = (checkboxValue) => {
-    setSelectedCheckbox(checkboxValue);
+  const handleCheckboxChange = (checkboxValue, checked) => {
+    if (checked) {
+      setSelectedFilters([checkboxValue]);
+      localStorage.setItem('selectedFilters', JSON.stringify([checkboxValue]));
+    } else {
+      setSelectedFilters([]);
+      localStorage.removeItem('selectedFilters');
+    }
   };
 
-  const filteredFriends = selectedCheckbox
+  const filteredFriends = selectedFilters.length
     ? friendsData.filter((friend) => {
-        if (selectedCheckbox === 'superCloseFriends') {
+        if (selectedFilters[0] === 'superCloseFriends') {
           return friend.status === 3;
-        } else if (selectedCheckbox === 'closeFriends') {
+        } else if (selectedFilters[0] === 'closeFriends') {
           return friend.status === 2;
         }
         return true;
@@ -38,10 +52,18 @@ export default function Friends() {
 
         <div className={styles.center_content}>
           <div className={styles.filterWrapper}>
-            <Filter handleCheckboxChange={handleCheckboxChange} onApply={handleCheckboxChange} />
+            <Filter
+              selectedFilters={selectedFilters}
+              onApply={handleCheckboxChange}
+              onClearAll={handleClearAllClick}
+            />
             <div className={styles.clearAllWrapper}>
               <button
-                className={selectedCheckbox ? `${styles.clearAllButton} ${styles.clearAllBtnSelected}` : styles.clearAllButton}
+                className={
+                  selectedFilters.length > 0
+                    ? `${styles.clearAllButton} ${styles.clearAllBtnSelected}`
+                    : styles.clearAllButton
+                }
                 onClick={handleClearAllClick}
               >
                 Clear All

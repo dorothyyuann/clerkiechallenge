@@ -2,11 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Filter.module.css';
 
-const Filter = ({ onApply }) => {
+const Filter = ({ selectedFilters, onApply, onClearAll }) => {
   const [isFilterSelected, setIsFilterSelected] = useState(false);
   const [isAnyCheckboxSelected, setIsAnyCheckboxSelected] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState([]);
-  const [storedSelectedFilters, setStoredSelectedFilters] = useState([]);
 
   useEffect(() => {
     setIsAnyCheckboxSelected(selectedFilters.length > 0);
@@ -20,42 +18,21 @@ const Filter = ({ onApply }) => {
     setIsFilterSelected(false);
   };
 
-  const handleCheckboxChange = (event) => {
-    const { checked, id } = event.target;
-
-    if (checked) {
-      setSelectedFilters((prevFilters) => [...prevFilters, id]);
-    } else {
-      setSelectedFilters((prevFilters) => prevFilters.filter((filter) => filter !== id));
-    }
-  };
-
   const handleClearAllClick = () => {
     setIsAnyCheckboxSelected(false);
-    setSelectedFilters([]);
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
+    onClearAll();
+  };
+
+  const handleCheckboxChange = (event) => {
+    const { checked, id } = event.target;
+    setIsAnyCheckboxSelected(checked);
+    onApply(id, checked);
   };
 
   const handleApplyClick = () => {
-    onApply(selectedFilters);
+    onApply();
     setIsFilterSelected(false);
-    setStoredSelectedFilters(selectedFilters);
   };
-
-  useEffect(() => {
-    if (isFilterSelected && storedSelectedFilters.length > 0) {
-      setSelectedFilters(storedSelectedFilters);
-      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-      checkboxes.forEach((checkbox) => {
-        checkbox.checked = storedSelectedFilters.includes(checkbox.id);
-      });
-    } else {
-      setSelectedFilters([]);
-    }
-  }, [isFilterSelected, storedSelectedFilters]);
 
   return (
     <div>
@@ -67,6 +44,7 @@ const Filter = ({ onApply }) => {
           src={isFilterSelected ? './../assets/icons/filter-selected.svg' : './../assets/icons/filter.svg'}
           alt="Filter"
         />
+        {selectedFilters.length > 0 ? <span>{selectedFilters.length}</span> : undefined}
       </button>
       {isFilterSelected && (
         <div id="popup" className={styles.overlay}>
