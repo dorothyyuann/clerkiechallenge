@@ -4,14 +4,29 @@ import SideMenu from '../../components/Sidemenu_friends';
 import Filter from '@/components/Filter';
 import React, { useState } from 'react';
 
-import friends from './data.json' assert {type: 'json'};
+import friendsData from './data.json' assert { type: 'json' };
 
 export default function Friends() {
-  const [isAnyCheckboxSelected, setIsAnyCheckboxSelected] = useState(false);
+  const [selectedCheckbox, setSelectedCheckbox] = useState('');
 
   const handleClearAllClick = () => {
-    setIsAnyCheckboxSelected(false);
+    setSelectedCheckbox('');
   };
+
+  const handleCheckboxChange = (checkboxValue) => {
+    setSelectedCheckbox(checkboxValue);
+  };
+
+  const filteredFriends = selectedCheckbox
+    ? friendsData.filter((friend) => {
+        if (selectedCheckbox === 'superCloseFriends') {
+          return friend.status === 3;
+        } else if (selectedCheckbox === 'closeFriends') {
+          return friend.status === 2;
+        }
+        return true;
+      })
+    : friendsData;
 
   return (
     <main className={styles.main}>
@@ -23,15 +38,18 @@ export default function Friends() {
 
         <div className={styles.center_content}>
           <div className={styles.filterWrapper}>
-            <Filter setIsAnyCheckboxSelected={setIsAnyCheckboxSelected} />
+            <Filter handleCheckboxChange={handleCheckboxChange} onApply={handleCheckboxChange} />
             <div className={styles.clearAllWrapper}>
-              <button className={isAnyCheckboxSelected ? `${styles.clearAllButton} ${styles.clearAllButtonSelected}` : styles.clearAllButton} onClick={handleClearAllClick}>
+              <button
+                className={selectedCheckbox ? `${styles.clearAllButton} ${styles.clearAllBtnSelected}` : styles.clearAllButton}
+                onClick={handleClearAllClick}
+              >
                 Clear All
               </button>
             </div>
           </div>
 
-          {friends.map((friend, index) => (
+          {filteredFriends.map((friend, index) => (
             <div className={styles.friend} key={index}>
               <div className={styles.headerWrapper}>
                 <div className={styles.name}>{friend.name}</div>
@@ -51,10 +69,8 @@ export default function Friends() {
               </div>
             </div>
           ))}
-          
         </div>
       </div>
-
     </main>
   );
 }

@@ -2,13 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Filter.module.css';
 
-const Filter = () => {
+const Filter = ({ onApply }) => {
     const [isFilterSelected, setIsFilterSelected] = useState(false);
     const [isAnyCheckboxSelected, setIsAnyCheckboxSelected] = useState(false);
+    const [selectedFilters, setSelectedFilters] = useState([]);
 
     useEffect(() => {
-        setIsAnyCheckboxSelected(false);
-    }, [isFilterSelected]);
+        setIsAnyCheckboxSelected(selectedFilters.length > 0);
+    }, [selectedFilters]);
 
     const handleFilterButtonClick = () => {
         setIsFilterSelected(!isFilterSelected);
@@ -19,15 +20,28 @@ const Filter = () => {
     };
 
     const handleCheckboxChange = (event) => {
-        setIsAnyCheckboxSelected(event.target.checked);
+        const { checked, id } = event.target;
+        setIsAnyCheckboxSelected(checked);
+
+        if (checked) {
+            setSelectedFilters((prevFilters) => [...prevFilters, id]);
+        } else {
+            setSelectedFilters((prevFilters) => prevFilters.filter((filter) => filter !== id));
+        }
     };
 
     const handleClearAllClick = () => {
         setIsAnyCheckboxSelected(false);
+        setSelectedFilters([]);
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach((checkbox) => {
             checkbox.checked = false;
         });
+    };
+
+    const handleApplyClick = () => {
+        onApply(selectedFilters);
+        setIsFilterSelected(false);
     };
 
     return (
@@ -36,17 +50,23 @@ const Filter = () => {
                 className={isFilterSelected ? styles.filterButtonSelected : styles.filterButton}
                 onClick={handleFilterButtonClick}
             >
-                <img src={isFilterSelected ? './../assets/icons/filter-selected.svg' : './../assets/icons/filter.svg'} />
+                <img
+                    src={isFilterSelected ? './../assets/icons/filter-selected.svg' : './../assets/icons/filter.svg'}
+                    alt="Filter"
+                />
             </button>
             {isFilterSelected && (
                 <div id="popup" className={styles.overlay}>
                     <div className={styles.header}>
-                        <button className={isAnyCheckboxSelected ? `${styles.clearAllBtn} ${styles.clearAllBtnSelected}` : styles.clearAllBtn} onClick={handleClearAllClick}>
+                        <button
+                            className={isAnyCheckboxSelected ? `${styles.clearAllBtn} ${styles.clearAllBtnSelected}` : styles.clearAllBtn}
+                            onClick={handleClearAllClick}
+                        >
                             Clear All
                         </button>
                         <div className={styles.title}>Filter</div>
                         <button className={styles.closeBtn} onClick={handleCloseButtonClick}>
-                            <img src="../assets/icons/close.svg" />
+                            <img src="../assets/icons/close.svg" alt="Close" />
                         </button>
                     </div>
                     <div className={styles.content}>
@@ -61,8 +81,9 @@ const Filter = () => {
                                 <input id="superCloseFriends" type="checkbox" onChange={handleCheckboxChange} />
                             </div>
                         </div>
-
-                        <button className={styles.applyBtn}>Apply</button>
+                        <button id="applyBtn" className={styles.applyBtn} onClick={handleApplyClick}>
+                            Apply
+                        </button>
                     </div>
                 </div>
             )}
