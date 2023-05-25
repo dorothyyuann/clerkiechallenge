@@ -22,25 +22,28 @@ export default function Friends() {
   };
 
   const handleCheckboxChange = (checkboxValue, checked) => {
+    let updatedFilters = [];
     if (checked) {
-      setSelectedFilters([checkboxValue]);
-      localStorage.setItem('selectedFilters', JSON.stringify([checkboxValue]));
+      updatedFilters = [...selectedFilters, checkboxValue];
     } else {
-      setSelectedFilters([]);
-      localStorage.removeItem('selectedFilters');
+      updatedFilters = selectedFilters.filter((filter) => filter !== checkboxValue);
     }
+    setSelectedFilters(updatedFilters);
+    localStorage.setItem('selectedFilters', JSON.stringify(updatedFilters));
   };
 
-  const filteredFriends = selectedFilters.length
-    ? friendsData.filter((friend) => {
-        if (selectedFilters[0] === 'superCloseFriends') {
-          return friend.status === 3;
-        } else if (selectedFilters[0] === 'closeFriends') {
-          return friend.status === 2;
+const filteredFriends = selectedFilters.length
+  ? friendsData.filter((friend) => {
+      for (const filter of selectedFilters) {
+        if (filter === 'superCloseFriends' && friend.status === 3) {
+          return true;
+        } else if (filter === 'closeFriends' && friend.status === 2) {
+          return true;
         }
-        return true;
-      })
-    : friendsData;
+      }
+      return false;
+    })
+  : friendsData;
 
   return (
     <main className={styles.main}>
@@ -61,8 +64,8 @@ export default function Friends() {
               <button
                 className={
                   selectedFilters.length > 0
-                    ? `${styles.clearAllButton} ${styles.clearAllBtnSelected}`
-                    : styles.clearAllButton
+                    ? styles.clearAllBtnSelected
+                    : styles.clearAllBtn
                 }
                 onClick={handleClearAllClick}
               >
