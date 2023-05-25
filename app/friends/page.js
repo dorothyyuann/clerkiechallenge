@@ -32,18 +32,18 @@ export default function Friends() {
     localStorage.setItem('selectedFilters', JSON.stringify(updatedFilters));
   };
 
-const filteredFriends = selectedFilters.length
-  ? friendsData.filter((friend) => {
-      for (const filter of selectedFilters) {
-        if (filter === 'superCloseFriends' && friend.status === 3) {
-          return true;
-        } else if (filter === 'closeFriends' && friend.status === 2) {
-          return true;
+  const filteredFriends = selectedFilters.length
+    ? friendsData.filter((friend) => {
+        for (const filter of selectedFilters) {
+          if (filter === 'superCloseFriends' && friend.status === 3) {
+            return true;
+          } else if (filter === 'closeFriends' && friend.status === 2) {
+            return true;
+          }
         }
-      }
-      return false;
-    })
-  : friendsData;
+        return false;
+      })
+    : friendsData;
 
   return (
     <main className={styles.main}>
@@ -57,6 +57,7 @@ const filteredFriends = selectedFilters.length
           <div className={styles.filterWrapper}>
             <Filter
               selectedFilters={selectedFilters}
+              setSelectedFilters={setSelectedFilters}
               onApply={handleCheckboxChange}
               onClearAll={handleClearAllClick}
             />
