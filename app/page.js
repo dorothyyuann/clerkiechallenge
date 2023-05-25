@@ -1,5 +1,5 @@
 import styles from './page.module.css'
-import SideMenu from '../../components/Sidemenu'
+import SideMenu from '../components/Sidemenu'
 
 export default function Home() {
   return (
